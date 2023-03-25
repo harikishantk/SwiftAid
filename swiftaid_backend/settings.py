@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'crispy_bootstrap4',
+    'django.contrib.gis',
     'webcampicture',
     'api',
     'users',
@@ -80,8 +81,12 @@ WSGI_APPLICATION = 'swiftaid_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'gis',
+        'USER': 'user001',
+        'PASSWORD': '123456789',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 

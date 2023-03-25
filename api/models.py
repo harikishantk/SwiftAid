@@ -1,5 +1,7 @@
 from django.db import models
+from django.contrib.gis.db import models
 from webcampicture.fields import WebcamPictureField
+from django.core.exceptions import ValidationError
 
 
 # Create your models here.
@@ -17,8 +19,7 @@ class Notification(models.Model):
 
 class Location(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    latitude = models.FloatField()
-    longitude = models.FloatField()
+    location = models.PointField()
     date = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
 
@@ -57,3 +58,17 @@ class HelpRequest(models.Model):
     def __str__(self):
         return self.user.username + ' ' + self.type + ' ' + self.status
     
+    # Create validator function here such that, before saving, check 'status' field and if the value 'missing' is also there in 'type' field
+    # then check the 'image' field and if it is empty, then raise an error
+    def save(self, *args, **kwargs):
+        if self.type == 'MISSING' and self.image == None:
+            raise ValidationError("Image field cannot be empty")
+        super(HelpRequest, self).save(*args, **kwargs)
+
+class HelpOffer(models.Model):
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    help_request = models.ForeignKey(HelpRequest, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username + ' ' + self.help_request.type
