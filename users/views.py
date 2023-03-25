@@ -12,6 +12,9 @@ from django.http import JsonResponse
 from django.contrib.auth.models import User
 
 
+def index(request):
+    return render(request, 'index.html')
+
 def register(request):
     # if request.user.is_authenticated:
     #     return redirect(reverse('home'))
@@ -25,7 +28,7 @@ def register(request):
                                 option = form.cleaned_data['option']
                                 )
             login(request, new_user)
-            return redirect('profile')
+            return redirect('index')
  
 
     else:
