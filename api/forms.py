@@ -17,4 +17,4 @@ class HelpRequestForm(forms.ModelForm):
                                           choices=TYPES_CHOICES)
     class Meta:
         model = HelpRequest
-        fields = ['location', 'status', 'description', 'type', 'image', 'picture']
+        fields = ['status', 'description', 'type', 'image', 'picture']

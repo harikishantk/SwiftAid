@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap4',
     'django.contrib.gis',
     'webcampicture',
+    "phonenumber_field",
     'api',
     'users',
 ]
@@ -141,3 +142,4 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'index'
+GDAL_LIBRARY_PATH = ""
