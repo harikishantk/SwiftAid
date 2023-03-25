@@ -1,7 +1,7 @@
 from django import forms
-from .models import HelpRequest
+from .models import HelpRequest, Location
 
-TYPES_CHOICES = (
+TYPES_CHOICES = [
         ('FOOD', 'FOOD'),
         ('MEDICINE', 'MEDICINE'),
         ('CLOTHES', 'CLOTHES'),
@@ -10,11 +10,16 @@ TYPES_CHOICES = (
         ('MISSING', 'MISSING'),
         ('OTHER', 'OTHER'),
 
-    )
+]
 
 class HelpRequestForm(forms.ModelForm):
-    type = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                          choices=TYPES_CHOICES)
+    
     class Meta:
         model = HelpRequest
         fields = ['status', 'description', 'type', 'image', 'picture']
+        widgets = {'type': forms.CheckboxSelectMultiple(choices=TYPES_CHOICES)}
+
+class LocationForm(forms.ModelForm):
+    class Meta:
+        model = Location
+        fields = ['location']

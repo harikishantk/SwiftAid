@@ -33,7 +33,7 @@ class HelpRequest(models.Model):
         ('COMPLETED', 'COMPLETED'),
     )
 
-    TYPES_CHOICES = (
+    TYPES_CHOICES = [
         ('FOOD', 'FOOD'),
         ('MEDICINE', 'MEDICINE'),
         ('CLOTHES', 'CLOTHES'),
@@ -42,12 +42,12 @@ class HelpRequest(models.Model):
         ('MISSING', 'MISSING'),
         ('OTHER', 'OTHER'),
 
-    )
+    ]
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    # location = models.ForeignKey(Location, on_delete=models.CASCADE)
     status = models.CharField(choices=STATUS_CHOICES, default='PENDING', max_length=100)
     description = models.CharField(max_length=100)
-    type = models.CharField(choices=TYPES_CHOICES,max_length=100)
+    type = models.CharField(max_length=100)
     date = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
 
