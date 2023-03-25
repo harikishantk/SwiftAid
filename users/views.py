@@ -22,6 +22,7 @@ def register(request):
             messages.success(request, 'Your account has been created! You are now able to log in')
             new_user = authenticate(username=form.cleaned_data['username'],
                                 password=form.cleaned_data['password1'],
+                                option = form.cleaned_data['option']
                                 )
             login(request, new_user)
             return redirect('profile')
