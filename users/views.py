@@ -1,4 +1,3 @@
-import requests
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -25,7 +24,6 @@ def register(request):
             messages.success(request, 'Your account has been created! You are now able to log in')
             new_user = authenticate(username=form.cleaned_data['username'],
                                 password=form.cleaned_data['password1'],
-                                option = form.cleaned_data['option']
                                 )
             login(request, new_user)
             return redirect('index')
@@ -37,8 +35,8 @@ def register(request):
 
 
 @login_required
-def logout(request):
-    time.sleep(2)
+def logout_user(request):
+
     logout(request)
     messages.success(request, 'You are logged out successfully')
     return redirect('login')

@@ -9,20 +9,25 @@ CHOICES = [
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
-    option = forms.CharField(label="Register as: ", widget=forms.Select(choices=CHOICES))
 
     class Meta:
         model = User 
-        fields = ['username', 'option', 'email','password1','password2']
+        fields = ['username', 'first_name', 'email','password1','password2']
+        widgets = {
+            'first_name': forms.Select(choices=CHOICES)
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(UserRegisterForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].label = "Register as"
 
 
 class LoginForm(AuthenticationForm):
-    email = forms.EmailField(required=True)
-    password = forms.CharField(widget=forms.PasswordInput)
-    option = forms.CharField(label="Login as: ", widget=forms.Select(choices=CHOICES))
+    option = forms.CharField(label="Login as ", widget=forms.Select(choices=CHOICES))
 
 
     class Meta:
         model = User
         fields = ('email', 'password', 'option')
-        
+
+   
