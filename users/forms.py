@@ -23,11 +23,8 @@ class UserRegisterForm(UserCreationForm):
 
 
 class LoginForm(AuthenticationForm):
-    option = forms.CharField(label="Login as ", widget=forms.Select(choices=CHOICES))
-
-
     class Meta:
         model = User
-        fields = ('email', 'password', 'option')
-
+        fields = ('email', 'password', 'first_name')
+        
    

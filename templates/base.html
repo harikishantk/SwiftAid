@@ -1,12 +1,48 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+    <link rel = "stylesheet" href = "{% static 'css/main.css' %}">
     <title>Django People</title>
   </head>
+
   <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #8DE990;" >
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          {% comment %} <img src="{% static 'images/logo_main.png' %}" width="80" height="80" class="d-inline-block align-top" alt=""> {% endcomment %}
+          SwiftAID
+        </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+              <div class="navbar-nav mr-auto">
+                  
+                  <a class="nav-item nav-link" href="https://sites.google.com/view/about-stddev/home">About this webapp</a>
+              </div>
+               <!--Navbar Right Side-->
+              <div class="navbar-nav">
+            
+                {% if request.user.is_authenticated %}
+                <a class="nav-item nav-link" href="{% url 'logout' %}" accesskey="l" title="shortcut key: Alt+l"><i class="fa fa-sign-in"></i>&nbsp;Logout</a>
+                {% else %}
+                <a class="nav-item nav-link" href="{% url 'login' %}" accesskey="l" title="shortcut key: Alt+l"><i class="fa fa-sign-in"></i>&nbsp;Login</a>
+                <a class="nav-item nav-link" href="{% url 'register' %}" accesskey = "r" title="shortcut key: Alt+r"><i class="fa fa-user-plus"></i>&nbsp;Register</a>
+                {% endif %}
+              </div>
+           </div>
+      </div>
+  </nav>
+
+
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-8">
