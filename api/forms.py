@@ -1,5 +1,6 @@
 from django import forms
 from .models import HelpRequest, Location
+from leaflet.forms.widgets import LeafletWidget
 
 TYPES_CHOICES = [
         ('FOOD', 'FOOD'),
@@ -20,6 +21,12 @@ class HelpRequestForm(forms.ModelForm):
         widgets = {'type': forms.CheckboxSelectMultiple(choices=TYPES_CHOICES)}
 
 class LocationForm(forms.ModelForm):
+    location = forms.CharField(widget=LeafletWidget(attrs={'map_height': '800px'}))
     class Meta:
         model = Location
-        fields = ['location']
+        fields = ('location',)
+
+       
+
+
+       

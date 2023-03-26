@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.gis.db import models
+from django.contrib.gis.db import models as gismodels
 from webcampicture.fields import WebcamPictureField
 from django.core.exceptions import ValidationError
 
@@ -19,9 +19,9 @@ class Notification(models.Model):
 
 class Location(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    location = models.PointField()
-    date = models.DateTimeField(auto_now_add=True)
-    is_active = models.BooleanField(default=True)
+    latitude = models.FloatField(null=True)
+    longitude = models.FloatField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.user.username

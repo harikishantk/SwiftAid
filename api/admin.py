@@ -1,11 +1,12 @@
-# from django.contrib import admin
-# from django.contrib.gis.admin import OSMGeoAdmin
-# from .models import Notification, Location, HelpRequest
+from django.contrib import admin
+from django.contrib.gis.admin import OSMGeoAdmin
+from .models import Notification, Location, HelpRequest
 
 # # Register your models here.
 
 # admin.site.register(Notification)
-# admin.site.register(HelpRequest)
+admin.site.register(HelpRequest)
+admin.site.register(Location)
 
 # @admin.register(Location)
 # class LocationAdmin(OSMGeoAdmin):

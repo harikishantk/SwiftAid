@@ -1,13 +1,89 @@
 {% extends 'base.html' %}
-
 {% load crispy_forms_tags %}
+{% load leaflet_tags %}
+
 
 {% block content %}
 
-  <form method="post">
+
+<form enctype="multipart/form-data" method="POST">
+
     {% csrf_token %}
+    <div id="map">
     {{ form1|crispy }}
+    </div>
     {{ form|crispy }}
     <button type="submit" class="btn btn-success">Request</button>
   </form>
+
+  
+  {% comment %} <script>
+    var map = L.map('map');
+
+    // Use the built-in Leaflet tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Use JavaScript to get the user's geolocation
+    navigator.geolocation.getCurrentPosition(function(position) {
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+
+        // Create a new Leaflet marker at the user's location
+        var marker = L.marker([lat, lng]).addTo(map);
+
+        // Set the map's center and zoom level to the user's location
+        map.setView([lat, lng], 19);
+    });
+</script> {% endcomment %}
+
+<script>
+  $(function() {
+    var map = L.map('map');
+
+    // Use the built-in Leaflet tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    var latitude = position.coords.latitude;
+    console.log(latitude)
+
+
+      function getLocation() {
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(sendLocation);
+          } else {
+              alert("Geolocation is not supported by this browser.");
+          }
+      }
+
+      function sendLocation(position) {
+          var latitude = position.coords.latitude;
+          var longitude = position.coords.longitude;
+
+
+
+        // Create a new Leaflet marker at the user's location
+        var marker = L.marker([latitude, longitude]).addTo(map);
+
+        // Set the map's center and zoom level to the user's location
+        map.setView([latitude, longitude], 19);
+
+          $.post('/gethelp/', {
+              'latitude': latitude,
+              'longitude': longitude,
+              'csrfmiddlewaretoken': '{{ csrf_token }}'
+          }, function(data) {
+              console.log(data);
+          });
+      }
+
+      getLocation();
+  });
+</script>
+
+
+
 {% endblock %}
