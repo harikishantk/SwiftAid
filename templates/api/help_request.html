@@ -6,83 +6,87 @@
 {% block content %}
 
 
-<form enctype="multipart/form-data" method="POST">
 
+
+
+
+
+  <form enctype="multipart/form-data" method="POST" action="{% url 'help_request' %}">
     {% csrf_token %}
-    <div id="map">
-    {{ form1|crispy }}
-    </div>
+    <div id="mapid" style="height: 400px;"></div>
+
+    {% comment %} {{ form2|crispy }} {% endcomment %}
     {{ form|crispy }}
-    <button type="submit" class="btn btn-success">Request</button>
-  </form>
 
-  
-  {% comment %} <script>
-    var map = L.map('map');
+    <button class="out">Submit</button>
 
-    // Use the built-in Leaflet tile layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
 
-    // Use JavaScript to get the user's geolocation
-    navigator.geolocation.getCurrentPosition(function(position) {
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude;
-
-        // Create a new Leaflet marker at the user's location
-        var marker = L.marker([lat, lng]).addTo(map);
-
-        // Set the map's center and zoom level to the user's location
-        map.setView([lat, lng], 19);
-    });
-</script> {% endcomment %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-  $(function() {
-    var map = L.map('map');
-
-    // Use the built-in Leaflet tile layer
+  $(document).ready(function() {
+    var mymap = L.map('mapid')
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    }).addTo(mymap);
+    
+    function markLocation(lat, lng) {
+      var marker = L.marker([lat, lng]).addTo(mymap);
+      mymap.setView([lat, lng], 13);
+    }
+    
+   
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+        markLocation(lat, lng);
 
-    var latitude = position.coords.latitude;
-    console.log(latitude)
+  
+        document.getElementById("id_field2").value = lat;
+        document.getElementById("id_field3").value = lng;
 
-
-      function getLocation() {
-          if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(sendLocation);
-          } else {
-              alert("Geolocation is not supported by this browser.");
-          }
-      }
-
-      function sendLocation(position) {
-          var latitude = position.coords.latitude;
-          var longitude = position.coords.longitude;
+        document.getElementById("id_field1").read_only = true;
+  
 
 
 
-        // Create a new Leaflet marker at the user's location
-        var marker = L.marker([latitude, longitude]).addTo(map);
-
-        // Set the map's center and zoom level to the user's location
-        map.setView([latitude, longitude], 19);
-
-          $.post('/gethelp/', {
-              'latitude': latitude,
-              'longitude': longitude,
-              'csrfmiddlewaretoken': '{{ csrf_token }}'
-          }, function(data) {
-              console.log(data);
-          });
-      }
-
-      getLocation();
+      });
+    
   });
-</script>
+
+
+
+  </script>
+
+ 
+  </form>
+
+  <script>
+
+        
+    document.getElementById("id_field1").value = "{{ user_id }}";
+
+
+    document.getElementById("id_field1").hidden = true;
+    $('label[for=id_field1], input#id_field1').hide();
+
+
+    document.getElementById("id_field2").hidden = true;
+    $('label[for=id_field2], input#id_field2').hide();
+
+    document.getElementById("id_field3").hidden = true;
+    $('label[for=id_field3], input#id_field3').hide();
+
+    document.getElementById("id_field4").value = "{{ user_id }}";
+
+
+    document.getElementById("id_field4").hidden = true;
+    $('label[for=id_field4], input#id_field4').hide();
+
+
+  </script>
+
+
 
 
 
